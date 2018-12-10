@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace H_Plus_Sports.Models
 {
@@ -11,6 +12,8 @@ namespace H_Plus_Sports.Models
         }
 
         public int OrderId { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime? Date { get; set; }
         public decimal? TotalDue { get; set; }
         public string Status { get; set; }
