@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using H_Plus_Sports.Models;
-using H_Plus_Sports.Repositories;
+using HPlusSports.Models;
+using HPlusSports.Repositories;
 
-namespace H_Plus_Sports.Controllers
+namespace HPlusSports.Controllers
 {
     [Produces("application/json")]
     [Route("api/Salespersons")]

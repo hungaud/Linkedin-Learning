@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using H_Plus_Sports.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using H_Plus_Sports.Models;
+using H_Plus_Sports.Repositories;
 
 namespace H_Plus_Sports.Controllers
 {

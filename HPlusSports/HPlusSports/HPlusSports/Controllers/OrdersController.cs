@@ -1,75 +1,75 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using H_Plus_Sports.Models;
-using H_Plus_Sports.Repositories;
+using HPlusSports.Models;
+using HPlusSports.Repositories;
 
-namespace H_Plus_Sports.Controllers
+namespace HPlusSports.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Products")]
-    public class ProductsController : Controller
+    [Route("api/Orders")]
+    public class OrdersController : Controller
     {
-        private readonly IProductRepository _products;
+        private readonly IOrderRepository _orders;
 
-        public ProductsController(IProductRepository products)
+        public OrdersController(IOrderRepository orders)
         {
-            _products = products;
+            _orders = orders;
         }
 
-        private async Task<bool> ProductExists(string id)
+        private async Task<bool> OrderExists(int id)
         {
-            return await _products.Exists(id);
+            return await _orders.Exists(id);
         }
 
         [HttpGet]
-        [Produces(typeof(DbSet<Product>))]
-        public IActionResult GetProduct()
+        [Produces(typeof(DbSet<Order>))]
+        public IActionResult GetOrder()
         {
-            return new ObjectResult(_products.GetAll());
+            return new ObjectResult(_orders.GetAll());
         }
 
         [HttpGet("{id}")]
-        [Produces(typeof(Product))]
-        public async Task<IActionResult> GetProduct([FromRoute] string id)
+        [Produces(typeof(Order))]
+        public async Task<IActionResult> GetOrder([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var product = await _products.Find(id);
+            var order = await _orders.Find(id);
 
-            if (product == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return Ok(product);
+            return Ok(order);
         }
 
         [HttpPut("{id}")]
-        [Produces(typeof(Product))]
-        public async Task<IActionResult> PutProduct([FromRoute] string id, [FromBody] Product product)
+        [Produces(typeof(Order))]
+        public async Task<IActionResult> PutOrder([FromRoute] int id, [FromBody] Order order)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != product.ProductId)
+            if (id != order.OrderId)
             {
                 return BadRequest();
             }
 
             try
             {
-                await _products.Update(product);
-                return Ok(product);
+                await _orders.Update(order);
+                return Ok(order);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await ProductExists(id))
+                if (!await OrderExists(id))
                 {
                     return NotFound();
                 }
@@ -81,8 +81,8 @@ namespace H_Plus_Sports.Controllers
         }
 
         [HttpPost]
-        [Produces(typeof(Product))]
-        public async Task<IActionResult> PostProduct([FromBody] Product product)
+        [Produces(typeof(Order))]
+        public async Task<IActionResult> PostOrder([FromBody] Order order)
         {
             if (!ModelState.IsValid)
             {
@@ -91,11 +91,11 @@ namespace H_Plus_Sports.Controllers
 
             try
             {
-                await _products.Add(product);
+                await _orders.Add(order);
             }
             catch (DbUpdateException)
             {
-                if (!await ProductExists(product.ProductId))
+                if (!await OrderExists(order.OrderId))
                 {
                     return NotFound();
                 }
@@ -105,24 +105,24 @@ namespace H_Plus_Sports.Controllers
                 }
             }
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
         }
 
         [HttpDelete("{id}")]
-        [Produces(typeof(Product))]
-        public async Task<IActionResult> DeleteProduct([FromRoute] string id)
+        [Produces(typeof(Order))]
+        public async Task<IActionResult> DeleteOrder([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!await ProductExists(id))
+            if (!await OrderExists(id))
             {
                 return NotFound();
             }
 
-            await _products.Remove(id);
+            await _orders.Remove(id);
 
             return Ok();
         }
