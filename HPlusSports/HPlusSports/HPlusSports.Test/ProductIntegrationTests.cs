@@ -1,11 +1,10 @@
 ﻿using System.Net;
 using System.Net.Http;
-using HPlusSports;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace H_Plus_Sports.Tests
+namespace HPlusSports.Tests
 {
     [TestClass]
     public class ProductIntegrationTests
