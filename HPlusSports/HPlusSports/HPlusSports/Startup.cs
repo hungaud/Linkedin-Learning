@@ -38,20 +38,30 @@ namespace HPlusSports
 
             services.AddMvc();
 
-            //var connection = "Data Source=DESKTOP-2NNMV13;Initial Catalog=H_Plus_Sports;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            services.AddDbContext<H_Plus_SportsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("H_Plus_Sports_Database")));
+            var connection = "Data Source=DESKTOP-2NNMV13;Initial Catalog=H_Plus_Sports;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            services.AddDbContext<H_Plus_SportsContext>(options => options.UseSqlServer(connection));
+
+            //services.AddDbContext<H_Plus_SportsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Development")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseHsts();
+            //}
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseCors("DevCorsPolicy");
             }
             else
             {
-                app.UseHsts();
+                app.UseCors(builder => builder.WithOrigins("http://localhost"));
             }
 
             app.UseHttpsRedirection();

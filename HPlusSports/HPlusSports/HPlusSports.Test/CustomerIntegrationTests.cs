@@ -21,7 +21,7 @@ namespace HPlusSports.Tests
         public void CustomerGetAllTest()
         {
             // Arrange
-            var request = new HttpRequestMessage(new HttpMethod("GET"), "/api/Customers/");
+            var request = new HttpRequestMessage(new HttpMethod("GET"), "/api/customers/");
 
             // Act
             var response = _client.SendAsync(request).Result;

@@ -34,7 +34,7 @@ namespace HPlusSports.Tests
         public void OrderGetOneTest(int id)
         {
             // Arrange
-            var request = new HttpRequestMessage(new HttpMethod("GET"), $"/api/Orders/{id}");
+            var request = new HttpRequestMessage(new HttpMethod("GET"), "/api/Orders/{id}");
 
             // Act
             var response = _client.SendAsync(request).Result;
