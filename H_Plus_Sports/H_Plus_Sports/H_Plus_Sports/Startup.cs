@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace H_Plus_Sports
 {
@@ -36,10 +37,12 @@ namespace H_Plus_Sports
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ISalespersonRepository, SalespersonRepository>();
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(option => option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            
 
-            var connection = "Data Source=DESKTOP-2NNMV13;Initial Catalog=H_Plus_Sports;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            //services.AddDbContext<H_Plus_SportsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("H_Plus_Sports_Database")));
+            //var connection = "Data Source=DESKTOP-2NNMV13;Initial Catalog=H_Plus_Sports;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            //services.AddDbContext<H_Plus_SportsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Development")));
+            var connection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=H_Plus_Sports;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             services.AddDbContext<H_Plus_SportsContext>(options => options.UseSqlServer(connection));
 
         }
